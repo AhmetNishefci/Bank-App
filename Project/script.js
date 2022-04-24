@@ -249,3 +249,41 @@ btnSort.addEventListener("click", (e) => {
   displayMovements(currentAccount.movements, !sorted);
   sorted = !sorted;
 });
+
+// const convertTitleCase = function (title) {
+//   const exceptions = ["a"];
+
+//   const titleCase = title
+//     .toLowerCase()
+//     .split(" ")
+//     .map((e) => {
+//       return exceptions.includes(e) ? e : e[0].toUpperCase() + e.slice(1);
+//     })
+//     .join(" ");
+//   return titleCase;
+// };
+
+// console.log(convertTitleCase("this is a nice title"));
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ["Alice", "Bob"] },
+  { weight: 8, curFood: 200, owners: ["Matilda"] },
+  { weight: 13, curFood: 275, owners: ["Sarah", "John"] },
+  { weight: 32, curFood: 340, owners: ["Michael"] },
+];
+
+dogs.forEach((e) => {
+  return (e.recFood = Math.trunc(e.weight ** 0.75 * 28));
+});
+
+console.log(dogs);
+
+const SarahDog = dogs.find((e) => {
+  return e.owners.includes("Sarah");
+});
+
+console.log(
+  `Sarah dog is eating too ${
+    SarahDog.curFood > SarahDog.recFood ? `much` : `too little`
+  }`
+);
