@@ -75,9 +75,16 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach((e, i) => {
+
+  const movs = sort
+    ? movements.slice().sort((a, b) => {
+        return a - b;
+      })
+    : movements;
+
+  movs.forEach((e, i) => {
     const type = e > 0 ? "deposit" : "withdrawal";
 
     const html = `<div class="movements__row">
@@ -198,6 +205,23 @@ btnTransfer.addEventListener("click", (e) => {
   }
 });
 
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((e) => {
+      return e >= amount * 0.1;
+    })
+  ) {
+    currentAccount.movements.push(amount);
+  }
+  inputLoanAmount.value = "";
+  updateUI(currentAccount);
+});
+
 btnClose.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -216,4 +240,12 @@ btnClose.addEventListener("click", (e) => {
   }
 
   inputCloseUsername.value = inputClosePin.value = "";
+});
+
+let sorted = false;
+
+btnSort.addEventListener("click", (e) => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
